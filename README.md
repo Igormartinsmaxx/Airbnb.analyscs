@@ -1,105 +1,92 @@
 %pip install pandas
-"""Projeto Airbnb"""
+"""Airbnb Project"""
 
 import os
 import pandas as pd
 
-# Definir o caminho correto do arquivo CSV (substitua pelo nome correto do arquivo se necessário)
+# Define the correct path of the CSV file (replace with the correct file name if necessary)
 file_path = r"C:\\Users\silva\\OneDrive\\Área de Trabalho\\Aula Python\\Exe_Igor.py\\testeprecificacao.csv"
-# Verificar se o arquivo existe
+
+# Check if the file exists
 if os.path.exists(file_path):
-    # Carregar os dados no pandas
+    # Load data into pandas
     df = pd.read_csv(file_path)
-    if os.path.exists(file_path):
-    # Carregar os dados no pandas
-    df = pd.read_csv(file_path)
+    
+    # Display the first 5 rows of the DataFrame
+    display("First 5 rows of the dataset:")
+    display(df.head())
+    
+    # Display general dataset information (data types and non-null values)
+    display("\nGeneral dataset information:")
+    display(df.info())
+    
+    # Display descriptive statistics of the dataset (numeric columns only)
+    display("\nDescriptive statistics:")
+    display(df.describe())
 else:
-    display("Erro: Arquivo não encontrado. Verifique o caminho.")
-    # Exibir as primeiras 5 linhas do DataFrame
-df = pd.read_csv(file_path)    
-display("Primeiras 5 linhas do dataset:")
-display(df.head())
-# Exibir informações gerais do dataset (tipos de dados e valores não nulos)
-display("\nInformações gerais do dataset:")
-display(df.info())
-# Exibir estatísticas descritivas do dataset (apenas para colunas numéricas)
-display("\nEstatísticas descritivas:")
-display(df.describe())
-display("Erro: Arquivo não encontrado. Verifique o caminho.")
-#1. Faça uma análise exploratória dos dados (EDA), demonstrando as principais
-#características entre as variáveis e apresentando algumas hipóteses de negócio
-#relacionadas. 
+    display("Error: File not found. Check the path.")
+
+# 1. Perform Exploratory Data Analysis (EDA), demonstrating the main 
+# characteristics between variables and presenting some related business hypotheses.
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Configuração do estilo do gráfico
+# Configure plot style
 sns.set_style("whitegrid")
 
-# Criando o histograma da distribuição de preços
+# Create the price distribution histogram
 plt.figure(figsize=(10, 5))
 sns.histplot(df['price'], bins=50, kde=True)
 
-# Limitando o eixo x para melhor visualização (opcional)
+# Limit the x-axis for better visualization (optional)
 plt.xlim(0, 500)
 
-# Adicionando títulos e rótulos
-plt.title("Distribuição dos preços dos imóveis")
-plt.xlabel("Preço (USD)")
-plt.ylabel("Frequência")
+# Add titles and labels
+plt.title("Property Price Distribution")
+plt.xlabel("Price (USD)")
+plt.ylabel("Frequency")
 
-# Exibindo o gráfico
+# Show plot
 plt.show()
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Configuração do estilo do gráfico
-sns.set_style("whitegrid")
-
-# Criando o gráfico de barras para os tipos de acomodação
+# Create the bar chart for accommodation types
 plt.figure(figsize=(8, 4))
 sns.countplot(data=df, x='room_type', palette="pastel", order=df['room_type'].value_counts().index)
 
-# Adicionando títulos e rótulos
-plt.title("Distribuição dos Tipos de Acomodação")
-plt.xlabel("Tipo de Acomodação")
-plt.ylabel("Quantidade de Imóveis")
+# Add titles and labels
+plt.title("Distribution of Accommodation Types")
+plt.xlabel("Accommodation Type")
+plt.ylabel("Number of Properties")
 
-# Exibindo o gráfico
+# Show plot
 plt.show()
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Configuração do estilo do gráfico
-sns.set_style("whitegrid")
-
-# Criando o boxplot para visualizar a distribuição de preços por grupo de bairro
+# Create the boxplot to visualize price distribution by neighborhood group
 plt.figure(figsize=(10, 5))
 sns.boxplot(data=df, x='bairro_group', y='price', showfliers=False, palette="pastel")
 
-# Limitando o eixo y para melhor visualização (opcional)
+# Limit the y-axis for better visualization (optional)
 plt.ylim(0, 500)
 
-# Adicionando títulos e rótulos
-plt.title("Preço dos Imóveis por Grupo de Bairro")
-plt.xlabel("Grupo de Bairro")
-plt.ylabel("Preço (USD)")
+# Add titles and labels
+plt.title("Property Price by Neighborhood Group")
+plt.xlabel("Neighborhood Group")
+plt.ylabel("Price (USD)")
 
-# Exibindo o gráfico
+# Show plot
 plt.show()
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
-# Selecionar apenas colunas numéricas
+# Select only numeric columns
 numeric_df = df.select_dtypes(include=['number'])
 
-# Calcular a matriz de correlação
+# Calculate the correlation matrix
 correlation_matrix = numeric_df.corr()
 
-# Criar o mapa de calor
+# Create the heatmap
 plt.figure(figsize=(10, 6))
-sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", linewidths= 0.5)
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", linewidths=0.5)
 
-# Exibir o gráfico
-plt.title("Matriz de Correlação")
+# Display the plot
+plt.title("Correlation Matrix")
 plt.show()
